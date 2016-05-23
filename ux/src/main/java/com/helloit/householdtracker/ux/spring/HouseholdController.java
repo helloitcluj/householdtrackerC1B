@@ -1,9 +1,6 @@
 package com.helloit.householdtracker.ux.spring;
 
 
-//import aron.sinoai.springmvcjpa.common.entities.Shop;
-//import aron.sinoai.springmvcjpa.common.repository.IShopRepository;
-
 import com.helloit.householdtracker.ux.common.entities.User;
 import com.helloit.householdtracker.ux.common.repository.IUserRepository;
 import org.apache.logging.log4j.LogManager;
@@ -39,7 +36,7 @@ public class HouseholdController {
 										 @RequestParam("ConfirmPassword") String confirmPassword, final ModelMap model) {
 		LOGGER.info(username);
 
-        if (password == confirmPassword) {
+        if (password.equals(confirmPassword)) {
 
             final User entity = new User();
             entity.setUsername(username);
