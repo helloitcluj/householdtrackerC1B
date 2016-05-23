@@ -24,7 +24,8 @@ import javax.annotation.Resource;
 public class HouseholdController {
 
 	public static final java.lang.String HELLO_VIEW_TAG = "hello";
-	private static final Logger LOGGER = LogManager.getLogger(HouseholdController.class);
+    public static final java.lang.String WARNING_VIEW_TAG = "warning";
+    private static final Logger LOGGER = LogManager.getLogger(HouseholdController.class);
 
 	//public static final String MESSAGE_PARAMETER_TAG = "message";
 	@Resource
@@ -38,12 +39,17 @@ public class HouseholdController {
 										 @RequestParam("ConfirmPassword") String confirmPassword, final ModelMap model) {
 		LOGGER.info(username);
 
-		final User entity = new User();
-		entity.setUsername(username);
-		entity.setPassword(password);
-		final User savedEntity = userRepository.save(entity);
+        if (password == confirmPassword) {
 
-        //model.addAttribute(MESSAGE_PARAMETER_TAG, SAMPLE_TEXT);
-		return HELLO_VIEW_TAG;
-	}
+            final User entity = new User();
+            entity.setUsername(username);
+            entity.setPassword(password);
+            final User savedEntity = userRepository.save(entity);
+            return HELLO_VIEW_TAG;
+
+        } else {
+            //model.addAttribute(MESSAGE_PARAMETER_TAG, SAMPLE_TEXT);
+            return WARNING_VIEW_TAG;
+        }
+    }
 }
