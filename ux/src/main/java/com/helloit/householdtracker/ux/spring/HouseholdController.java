@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.annotation.Resource;
+import java.util.List;
 
 
 @Service
@@ -20,33 +21,49 @@ import javax.annotation.Resource;
 @RequestMapping("register")
 public class HouseholdController {
 
-	public static final java.lang.String HELLO_VIEW_TAG = "hello";
-    public static final java.lang.String WARNING_VIEW_TAG = "warning";
     private static final Logger LOGGER = LogManager.getLogger(HouseholdController.class);
 
-	//public static final String MESSAGE_PARAMETER_TAG = "message";
-	@Resource
-	private IUserRepository userRepository;
+    private static final String REGISTER_VIEW_TAG = "register";
 
-	//public static final String SAMPLE_TEXT = "Hello world!";
+    private static final String MESSAGE_PARAMETER_TAG = "message";
+    private static final String USER_SAVED = "User saved";
+    private static final String USERNAME_ALREADY_EXISTS = "Username already exists";
+
+    @Resource
+    private IUserRepository userRepository;
+
+    //public static final String SAMPLE_TEXT = "Hello world!";
 
     //@Transactional
-	@RequestMapping(method = RequestMethod.GET)
-	public java.lang.String printWelcome(String username, @RequestParam("Password") String password,
-										 @RequestParam("ConfirmPassword") String confirmPassword, final ModelMap model) {
-		LOGGER.info(username);
+    @RequestMapping(method = RequestMethod.GET)
+    public java.lang.String printWelcome(String username, @RequestParam("Password") String password,
+                                         @RequestParam("ConfirmPassword") String confirmPassword, final ModelMap model) {
+        LOGGER.info(username);
 
-        if (password.equals(confirmPassword)) {
+        final String message;
 
-            final User entity = new User();
-            entity.setUsername(username);
-            entity.setPassword(password);
-            final User savedEntity = userRepository.save(entity);
-            return HELLO_VIEW_TAG;
+        List<User> existingUsers = userRepository.findByusername(username);
+        if (existingUsers.isEmpty()) {
+
+            if (password.equals(confirmPassword)) {
+
+                final User entity = new User();
+                entity.setUsername(username);
+                entity.setPassword(password);
+                final User savedEntity = userRepository.save(entity);
+
+                message = USER_SAVED;
+
+            } else {
+                message = "Your password and confirmation password do not match";
+            }
 
         } else {
-            //model.addAttribute(MESSAGE_PARAMETER_TAG, SAMPLE_TEXT);
-            return WARNING_VIEW_TAG;
+            message = USERNAME_ALREADY_EXISTS;
         }
+
+        model.addAttribute(MESSAGE_PARAMETER_TAG, message);
+
+        return REGISTER_VIEW_TAG;
     }
 }
