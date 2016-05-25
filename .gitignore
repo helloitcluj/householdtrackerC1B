@@ -1,5 +1,6 @@
 /*.iml
 /build
+/classes
 /documentation
 /.idea/*
 !/.idea/codeStyleSettings.xml
