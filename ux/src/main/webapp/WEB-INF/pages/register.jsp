@@ -3,9 +3,9 @@
 <html lang="en">
 <head>
 	<meta http-equiv="content-type" content="text/html; charset=utf-8">
-	<title>Test</title>
+	<title>Register</title>
 </head>
 <body>
-User Saved.
+${message}
 </body>
 </html>
