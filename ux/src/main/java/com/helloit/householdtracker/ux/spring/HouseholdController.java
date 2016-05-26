@@ -18,7 +18,6 @@ import java.util.List;
 
 @Service
 @Controller
-@RequestMapping("register")
 public class HouseholdController {
 
     private static final Logger LOGGER = LogManager.getLogger(HouseholdController.class);
@@ -32,17 +31,14 @@ public class HouseholdController {
     @Resource
     private IUserRepository userRepository;
 
-    //public static final String SAMPLE_TEXT = "Hello world!";
-
-    //@Transactional
-    @RequestMapping(method = RequestMethod.GET)
-    public java.lang.String printWelcome(String username, @RequestParam("Password") String password,
-                                         @RequestParam("ConfirmPassword") String confirmPassword, final ModelMap model) {
+    @RequestMapping(path = "register", method = RequestMethod.GET)
+    public String register(String username, @RequestParam("Password") String password,
+                           @RequestParam("ConfirmPassword") String confirmPassword, final ModelMap model) {
         LOGGER.info(username);
 
         final String message;
 
-        List<User> existingUsers = userRepository.findByusername(username);
+        List<User> existingUsers = userRepository.findByUsername(username);
         if (existingUsers.isEmpty()) {
 
             if (password.equals(confirmPassword)) {
@@ -66,4 +62,30 @@ public class HouseholdController {
 
         return REGISTER_VIEW_TAG;
     }
+
+
+    @RequestMapping(path = "login", method = RequestMethod.GET)
+    public String login(String name, @RequestParam("Password") String password, final ModelMap model) {
+        LOGGER.info(name);
+
+        final String message;
+
+        User existingAccount = userRepository.findOneByUsername(name);
+        if (existingAccount == null) {
+            message = "You don't have an account.";
+
+        } else if (!password.equals(existingAccount.getPassword())) {
+
+            message = "Invalid credentials";
+        } else {
+            message = "Login successful!";
+        }
+
+
+        model.addAttribute(MESSAGE_PARAMETER_TAG, message);
+        return REGISTER_VIEW_TAG;
+    }
+
 }
+
+
