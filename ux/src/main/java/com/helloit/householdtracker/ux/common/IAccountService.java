@@ -12,6 +12,7 @@ public interface IAccountService {
         USER_SAVED,
         CONFIRMATION_PASSWORD_DO_NOT_MATCH,
         USERNAME_ALREADY_EXISTS
+
     }
 }
 
