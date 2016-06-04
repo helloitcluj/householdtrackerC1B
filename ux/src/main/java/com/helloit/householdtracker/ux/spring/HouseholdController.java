@@ -20,16 +20,14 @@ import java.util.List;
 @Controller
 public class HouseholdController {
 
+    public static final String REGISTER_VIEW_TAG = "register";
+    public static final String USERNAME_ALREADY_EXISTS = "Username already exists";
     private static final Logger LOGGER = LogManager.getLogger(HouseholdController.class);
-
-    private static final String REGISTER_VIEW_TAG = "register";
-
     private static final String MESSAGE_PARAMETER_TAG = "message";
     private static final String USER_SAVED = "User saved";
-    private static final String USERNAME_ALREADY_EXISTS = "Username already exists";
-
     @Resource
-    private IUserRepository userRepository;
+    public IUserRepository userRepository;
+
 
     @RequestMapping(path = "register", method = RequestMethod.GET)
     public String register(String username, @RequestParam("Password") String password,

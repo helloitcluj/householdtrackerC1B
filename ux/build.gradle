@@ -25,6 +25,7 @@ dependencies {
 
     compile 'org.hibernate:hibernate-entitymanager:5.1.0.Final'
     compile 'org.hsqldb:hsqldb:2.3.3'
+    compile 'org.jetbrains:annotations-java5:15.0'
 
     providedCompile 'javax.servlet:javax.servlet-api:3.0.1'
 
