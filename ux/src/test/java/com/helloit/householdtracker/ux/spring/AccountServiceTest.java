@@ -1,6 +1,8 @@
 package com.helloit.householdtracker.ux.spring;
 
-import com.helloit.householdtracker.ux.common.IAccountService;
+import com.helloit.householdtracker.common.IAccountService;
+import com.helloit.householdtracker.common.entities.User;
+import com.helloit.householdtracker.common.repository.IUserRepository;
 import com.helloit.householdtracker.ux.common.entities.User;
 import com.helloit.householdtracker.ux.common.repository.IUserRepository;
 import org.jetbrains.annotations.NotNull;
@@ -29,16 +31,6 @@ public class AccountServiceTest {
     @NotNull
     private IUserRepository getMockedUserRepository() {
         return new IUserRepository() {
-
-            @Override
-            public List<User> findByUsername(String username) {
-                return null;
-            }
-
-            @Override
-            public User findOneByUsername(String username) {
-                return null;
-            }
 
             @Override
             public <S extends User> S save(S entity) {

@@ -1,6 +1,7 @@
 package com.helloit.householdtracker.ux.spring;
 
 import com.helloit.householdtracker.tools.SchemaManager;
+import com.helloit.householdtracker.ux.spring.account.AccountController;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -11,6 +12,10 @@ import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.web.context.WebApplicationContext;
 
+import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.CoreMatchers.not;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 import static org.springframework.test.web.servlet.setup.MockMvcBuilders.webAppContextSetup;
 
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -32,12 +37,11 @@ public class AccountControllerTest {
 
     @Test
     public void mismatchingPasswordTest() throws Exception {
-        /*mockMvc.perform(post("/account/create")
-                .param("username", "")
-                .param("password", "").param("confirmpassword", ""))
+        mockMvc.perform(post("/account/create")
+                .param("userName", "aron")
+                .param("password", "123").param("retypedPassword", "1234"))
                 .andExpect(status().isOk())
-                .andExpect(view().name(HouseholdController.REGISTER_VIEW_TAG))
-                .andExpect(model().attribute(HouseholdController.USERNAME_ALREADY_EXISTS, not(is(""))));
-    */
+                .andExpect(view().name(AccountController.ACCOUNT_ERROR))
+                .andExpect(model().attribute(AccountController.MESSAGE_TAG, not(is(""))));
     }
 }
