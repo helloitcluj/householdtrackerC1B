@@ -66,22 +66,26 @@ public class HouseholdController {
     public String login(String name, @RequestParam("Password") String password, final ModelMap model) {
         LOGGER.info(name);
 
+        String result;
         final String message;
 
         User existingAccount = userRepository.findOneByUsername(name);
         if (existingAccount == null) {
+            result = REGISTER_VIEW_TAG;
+
             message = "You don't have an account.";
+            model.addAttribute(MESSAGE_PARAMETER_TAG, message);
 
         } else if (!password.equals(existingAccount.getPassword())) {
+            result = REGISTER_VIEW_TAG;
 
             message = "Invalid credentials";
+            model.addAttribute(MESSAGE_PARAMETER_TAG, message);
         } else {
-            message = "Login successful!";
+            result = "redirect:homepage.html";
+
         }
-
-
-        model.addAttribute(MESSAGE_PARAMETER_TAG, message);
-        return REGISTER_VIEW_TAG;
+        return result;
     }
 
 }
