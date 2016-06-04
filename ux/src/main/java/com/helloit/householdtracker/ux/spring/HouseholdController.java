@@ -61,7 +61,6 @@ public class HouseholdController {
         }
 
         return result;
-
     }
 
 
