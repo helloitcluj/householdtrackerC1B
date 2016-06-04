@@ -1,66 +1,67 @@
 package com.helloit.householdtracker.ux.spring;
 
 
+import com.helloit.householdtracker.ux.common.IAccountService;
 import com.helloit.householdtracker.ux.common.entities.User;
-import com.helloit.householdtracker.ux.common.repository.IUserRepository;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.stereotype.Service;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import javax.annotation.Resource;
-import java.util.List;
 
-
-@Service
 @Controller
+@RequestMapping("account")
 public class HouseholdController {
 
+    public static final String ACCOUNT_ERROR = "account/error";
     private static final Logger LOGGER = LogManager.getLogger(HouseholdController.class);
-
     private static final String REGISTER_VIEW_TAG = "register";
-
     private static final String MESSAGE_PARAMETER_TAG = "message";
-    private static final String USER_SAVED = "User saved";
-    private static final String USERNAME_ALREADY_EXISTS = "Username already exists";
+    private static final String USER_CREATED = "account/success";
+    @Autowired
+    private IAccountService accountService;
 
-    @Resource
-    private IUserRepository userRepository;
+    @RequestMapping(path = "register", method = RequestMethod.POST)
+    public String register(final ModelMap model, final String username, final String password, final String confirmPassword) {
 
-    @RequestMapping(path = "register", method = RequestMethod.GET)
-    public String register(String username, @RequestParam("Password") String password,
-                           @RequestParam("ConfirmPassword") String confirmPassword, final ModelMap model) {
-        LOGGER.info(username);
-
-        final String message;
-
-        List<User> existingUsers = userRepository.findByUsername(username);
-        if (existingUsers.isEmpty()) {
-
-            if (password.equals(confirmPassword)) {
-
-                final User entity = new User();
-                entity.setUsername(username);
-                entity.setPassword(password);
-                final User savedEntity = userRepository.save(entity);
-
-                message = USER_SAVED;
-
-            } else {
-                message = "Your password and confirmation password do not match";
-            }
-
-        } else {
-            message = USERNAME_ALREADY_EXISTS;
+        if (LOGGER.isDebugEnabled()) {
+            LOGGER.debug("Creating new account: " + username);
         }
 
-        model.addAttribute(MESSAGE_PARAMETER_TAG, message);
+        final String result;
 
-        return REGISTER_VIEW_TAG;
+        final IAccountService.CreationOutcomes outcome = accountService.register(username, password, confirmPassword);
+
+        accountService.register(username, password, confirmPassword);
+
+
+        switch (outcome) {
+            case USER_SAVED: {
+                result = USER_CREATED;
+                model.addAttribute(MESSAGE_PARAMETER_TAG, "User successfully created.");
+                break;
+            }
+            case CONFIRMATION_PASSWORD_DO_NOT_MATCH: {
+                result = ACCOUNT_ERROR;
+                model.addAttribute(MESSAGE_PARAMETER_TAG, "Password and Confirm password did not match!");
+                break;
+            }
+            case USERNAME_ALREADY_EXISTS: {
+                result = ACCOUNT_ERROR;
+                model.addAttribute(MESSAGE_PARAMETER_TAG, "Account '" + username + "' already exists!");
+                break;
+            }
+            default: {
+                throw new UnsupportedOperationException("Not supported case!");
+            }
+        }
+
+        return result;
+
     }
 
 
@@ -70,7 +71,7 @@ public class HouseholdController {
 
         final String message;
 
-        User existingAccount = userRepository.findOneByUsername(name);
+        User existingAccount = null;//userRepository.findOneByUsername(name);
         if (existingAccount == null) {
             message = "You don't have an account.";
 
