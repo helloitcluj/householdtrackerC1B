@@ -2,7 +2,6 @@ package com.helloit.householdtracker.ux.spring;
 
 
 import com.helloit.householdtracker.ux.common.IAccountService;
-import com.helloit.householdtracker.ux.common.entities.User;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,6 +21,9 @@ public class HouseholdController {
     private static final String REGISTER_VIEW_TAG = "register";
     private static final String MESSAGE_PARAMETER_TAG = "message";
     private static final String USER_CREATED = "account/success";
+    private static final String USER_DENIED = "Login failed";
+    private static final String LOGIN_ERROR = "Wrong Password";
+    private static final String LOGIN_SUCCEED = "Login succeed";
     @Autowired
     private IAccountService accountService;
 
@@ -68,22 +70,34 @@ public class HouseholdController {
     public String login(String name, @RequestParam("Password") String password, final ModelMap model) {
         LOGGER.info(name);
 
-        final String message;
+        final String result;
 
-        User existingAccount = null;//userRepository.findOneByUsername(name);
-        if (existingAccount == null) {
-            message = "You don't have an account.";
+        final IAccountService.LoginOutcomes outcome = accountService.login(name, password);
+        accountService.login(name, password);
 
-        } else if (!password.equals(existingAccount.getPassword())) {
-
-            message = "Invalid credentials";
-        } else {
-            message = "Login successful!";
+        switch (outcome) {
+            case INEXISTING_ACCOUNT: {
+                result = USER_DENIED;
+                model.addAttribute(MESSAGE_PARAMETER_TAG, "You don't have an account");
+                break;
+            }
+            case INVALID_PASSWORD: {
+                result = LOGIN_ERROR;
+                model.addAttribute(MESSAGE_PARAMETER_TAG, "Your Password is incorrect!");
+                break;
+            }
+            case LOGIN_SUCCEED: {
+                result = LOGIN_SUCCEED;
+                model.addAttribute(MESSAGE_PARAMETER_TAG, "You logged in Successfully");
+                break;
+            }
+            default: {
+                throw new UnsupportedOperationException("Not supported case!");
+            }
         }
 
+        return result;
 
-        model.addAttribute(MESSAGE_PARAMETER_TAG, message);
-        return REGISTER_VIEW_TAG;
     }
 
 }

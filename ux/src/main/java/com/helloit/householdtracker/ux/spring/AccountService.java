@@ -50,4 +50,23 @@ public class AccountService implements IAccountService {
         return result;
     }
 
+
+    @Override
+    public LoginOutcomes login(@NotNull String name, @NotNull String password) {
+        LoginOutcomes result;
+
+        User existingAccount = null;//userRepository.findOneByUsername(name);
+        if (existingAccount == null) {
+            result = LoginOutcomes.INEXISTING_ACCOUNT;
+
+        } else if (!password.equals(existingAccount.getPassword())) {
+
+            result = LoginOutcomes.INVALID_PASSWORD;
+        } else {
+            result = LoginOutcomes.LOGIN_SUCCEED;
+        }
+
+        return result;
+    }
+
 }
