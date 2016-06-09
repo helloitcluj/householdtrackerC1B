@@ -19,11 +19,12 @@ public class HouseholdController {
     public static final String ACCOUNT_ERROR = "account/error";
     private static final Logger LOGGER = LogManager.getLogger(HouseholdController.class);
     private static final String REGISTER_VIEW_TAG = "register";
-    private static final String MESSAGE_PARAMETER_TAG = "message";
+    public static final String MESSAGE_PARAMETER_TAG = "message";
     private static final String USER_CREATED = "account/success";
     private static final String USER_DENIED = "Login failed";
     private static final String LOGIN_ERROR = "Wrong Password";
     private static final String LOGIN_SUCCEED = "Login succeed";
+
     @Autowired
     private IAccountService accountService;
 

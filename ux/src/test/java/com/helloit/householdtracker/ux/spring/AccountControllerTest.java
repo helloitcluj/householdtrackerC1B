@@ -1,7 +1,7 @@
 package com.helloit.householdtracker.ux.spring;
 
 import com.helloit.householdtracker.tools.SchemaManager;
-import com.helloit.householdtracker.ux.spring.account.AccountController;
+import com.helloit.householdtracker.ux.spring.HouseholdController;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -24,6 +24,8 @@ import static org.springframework.test.web.servlet.setup.MockMvcBuilders.webAppC
 public class AccountControllerTest {
     private MockMvc mockMvc;
 
+
+
     @Autowired
     private WebApplicationContext wac;
 
@@ -41,7 +43,7 @@ public class AccountControllerTest {
                 .param("userName", "aron")
                 .param("password", "123").param("retypedPassword", "1234"))
                 .andExpect(status().isOk())
-                .andExpect(view().name(AccountController.ACCOUNT_ERROR))
-                .andExpect(model().attribute(AccountController.MESSAGE_TAG, not(is(""))));
+                .andExpect(view().name(HouseholdController.ACCOUNT_ERROR))
+                .andExpect(model().attribute(HouseholdController.MESSAGE_PARAMETER_TAG, not(is(""))));
     }
 }

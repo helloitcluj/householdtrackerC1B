@@ -3,6 +3,7 @@ package com.helloit.householdtracker.ux.spring;
 import com.helloit.householdtracker.ux.common.IAccountService;
 import com.helloit.householdtracker.ux.common.entities.User;
 import com.helloit.householdtracker.ux.common.repository.IUserRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.jetbrains.annotations.NotNull;
@@ -20,6 +21,7 @@ public class AccountService implements IAccountService {
 
     private final IUserRepository userRepository;
 
+    @Autowired
     public AccountService(IUserRepository userRepository) {
         this.userRepository = userRepository;
     }
@@ -55,7 +57,8 @@ public class AccountService implements IAccountService {
     public LoginOutcomes login(@NotNull String name, @NotNull String password) {
         LoginOutcomes result;
 
-        User existingAccount = null;//userRepository.findOneByUsername(name);
+        User existingAccount =  userRepository.findOneByUsername(name);
+
         if (existingAccount == null) {
             result = LoginOutcomes.INEXISTING_ACCOUNT;
 
