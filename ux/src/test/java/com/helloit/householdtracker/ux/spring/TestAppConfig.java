@@ -9,7 +9,7 @@ import org.springframework.context.support.PropertySourcesPlaceholderConfigurer;
 @Import(PersistenceConfig.class)
 @PropertySource("classpath:testapp.properties")
 public class TestAppConfig {
-
+/*
     @Bean
     public PropertySourcesPlaceholderConfigurer propertyConfigIn() {
         return new PropertySourcesPlaceholderConfigurer();
@@ -19,5 +19,5 @@ public class TestAppConfig {
     public IAccountService register(final IUserRepository userRepository) {
         return new AccountService(userRepository);
     }
-
+*/
 }

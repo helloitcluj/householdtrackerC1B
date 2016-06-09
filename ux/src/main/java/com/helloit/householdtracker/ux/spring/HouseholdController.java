@@ -13,17 +13,11 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 
 @Controller
-@RequestMapping("account")
 public class HouseholdController {
 
-    public static final String ACCOUNT_ERROR = "account/error";
     private static final Logger LOGGER = LogManager.getLogger(HouseholdController.class);
     private static final String REGISTER_VIEW_TAG = "register";
     public static final String MESSAGE_PARAMETER_TAG = "message";
-    private static final String USER_CREATED = "account/success";
-    private static final String USER_DENIED = "Login failed";
-    private static final String LOGIN_ERROR = "Wrong Password";
-    private static final String LOGIN_SUCCEED = "Login succeed";
 
     @Autowired
     private IAccountService accountService;
@@ -35,8 +29,6 @@ public class HouseholdController {
             LOGGER.debug("Creating new account: " + username);
         }
 
-        final String result;
-
         final IAccountService.CreationOutcomes outcome = accountService.register(username, password, confirmPassword);
 
         accountService.register(username, password, confirmPassword);
@@ -44,17 +36,14 @@ public class HouseholdController {
 
         switch (outcome) {
             case USER_SAVED: {
-                result = USER_CREATED;
                 model.addAttribute(MESSAGE_PARAMETER_TAG, "User successfully created.");
                 break;
             }
             case CONFIRMATION_PASSWORD_DO_NOT_MATCH: {
-                result = ACCOUNT_ERROR;
                 model.addAttribute(MESSAGE_PARAMETER_TAG, "Password and Confirm password did not match!");
                 break;
             }
             case USERNAME_ALREADY_EXISTS: {
-                result = ACCOUNT_ERROR;
                 model.addAttribute(MESSAGE_PARAMETER_TAG, "Account '" + username + "' already exists!");
                 break;
             }
@@ -63,7 +52,7 @@ public class HouseholdController {
             }
         }
 
-        return result;
+        return REGISTER_VIEW_TAG;
     }
 
 
@@ -78,18 +67,18 @@ public class HouseholdController {
 
         switch (outcome) {
             case INEXISTING_ACCOUNT: {
-                result = USER_DENIED;
+                result = REGISTER_VIEW_TAG;
                 model.addAttribute(MESSAGE_PARAMETER_TAG, "You don't have an account");
                 break;
             }
             case INVALID_PASSWORD: {
-                result = LOGIN_ERROR;
+                result = REGISTER_VIEW_TAG;
                 model.addAttribute(MESSAGE_PARAMETER_TAG, "Your Password is incorrect!");
                 break;
             }
             case LOGIN_SUCCEED: {
-                result = LOGIN_SUCCEED;
-                model.addAttribute(MESSAGE_PARAMETER_TAG, "You logged in Successfully");
+                result = "redirect:/";
+
                 break;
             }
             default: {
