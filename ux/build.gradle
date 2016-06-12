@@ -34,4 +34,7 @@ dependencies {
     testCompile group: "org.springframework", name: "spring-test", version: "$springVersion"
 }
 
-
+task recreateSchema(type: JavaExec) {
+    main = "com.helloit.householdtracker.tools.SchemaManager"
+    classpath = sourceSets.main.runtimeClasspath
+}
