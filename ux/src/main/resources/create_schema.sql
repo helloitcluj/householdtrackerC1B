@@ -1,5 +1,0 @@
-CREATE TABLE Users (
-  id INTEGER IDENTITY PRIMARY KEY,
-  username VARCHAR(30) UNIQUE ,
-  password VARCHAR(30)
-);

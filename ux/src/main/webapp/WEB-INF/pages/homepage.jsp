@@ -6,7 +6,7 @@
 </head>
 <body bgcolor="#1e90ff">
 <center>
-    <div style="height: 754px; width: 1574px; background-image: url(Householdtracker.jpg);">
+    <div style="height: 754px; width: 1574px; background-image: url(../../images/Householdtracker.jpg);">
         <font color="white">
             <strong>
                 <font size="200">
@@ -22,7 +22,7 @@
                     <br>
                     <br>
                 </font>
-                <a href="loginpage.html">Logout</a>
+                <a href="account/loginpage.html">Logout</a>
             </strong>
         </font>
     </div>
