@@ -10,6 +10,7 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpSession;
 
@@ -19,7 +20,7 @@ public class HouseholdController {
 
     private static final Logger LOGGER = LogManager.getLogger(HouseholdController.class);
 
-    public static final String ERROR_VIEW_TAG = "error";
+    public static final String MESSAGE_VIEW_TAG = "messagebox";
     public static final String MESSAGE_PARAMETER_TAG = "message";
     public static final String HOME_VIEW_TAG = "homepage";
     public static final String CURRENT_PRINCIPAL_TAG = "currentPrincipal";
@@ -57,12 +58,12 @@ public class HouseholdController {
             }
         }
 
-        return ERROR_VIEW_TAG;
+        return MESSAGE_VIEW_TAG;
     }
 
 
     @RequestMapping(path = "account/login", method = RequestMethod.POST)
-    public String login(final String name, final String password, final ModelMap model, final HttpSession session) {
+      public String login(final String name, final String password, final ModelMap model, final HttpSession session) {
         LOGGER.info(name);
 
         final String result;
@@ -72,12 +73,12 @@ public class HouseholdController {
 
         switch (outcome) {
             case INEXISTING_ACCOUNT: {
-                result = ERROR_VIEW_TAG;
+                result = MESSAGE_VIEW_TAG;
                 model.addAttribute(MESSAGE_PARAMETER_TAG, "You don't have an account");
                 break;
             }
             case INVALID_PASSWORD: {
-                result = ERROR_VIEW_TAG;
+                result = MESSAGE_VIEW_TAG;
                 model.addAttribute(MESSAGE_PARAMETER_TAG, "Your Password is incorrect!");
                 break;
             }
@@ -96,6 +97,46 @@ public class HouseholdController {
         return result;
 
     }
+
+
+
+    @RequestMapping(path = "account/loginAjax", method = RequestMethod.POST)
+    public @ResponseBody String loginAjax(final String name, final String password, final ModelMap model, final HttpSession session) {
+        LOGGER.info(name);
+
+        final String result;
+
+        final IAccountService.LoginOutcomes outcome = accountService.login(name, password);
+        accountService.login(name, password);
+
+        switch (outcome) {
+            case INEXISTING_ACCOUNT: {
+                result = "You don't have an account";
+            break;
+            }
+            case INVALID_PASSWORD: {
+                result ="Your Password is incorrect!";
+                break;
+            }
+            case LOGIN_SUCCEED: {
+                session.setAttribute(CURRENT_PRINCIPAL_TAG, name);
+                result = null;
+                break;
+            }
+            default: {
+                throw new UnsupportedOperationException("Not supported case!");
+            }
+        }
+
+        return result;
+
+    }
+
+
+
+
+
+
 
     @RequestMapping(path = "/", method = RequestMethod.GET)
     public String home(final HttpSession session) {

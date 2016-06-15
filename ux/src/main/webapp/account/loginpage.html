@@ -6,36 +6,59 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
     <title>Login</title>
-
-
     <!-- Bootstrap core CSS -->
     <link href="../css/vendor/bootstrap.min.css" rel="stylesheet">
     <!-- Custom styles for this template -->
     <link href="../css/loginpage.css" rel="stylesheet">
 </head>
+
 <body bgcolor="#1e90ff">
 <div class="container">
 <center>
     <div style="height: 754px; width: 1574px; background-image: url(../images/Householdtracker.jpg);">
-        <font color="white">
-            <strong>
-                <form action="login" method="post">
+        <strong>
+
+                 <form id="mainForm" action="loginAjax" method="post">
                     Name:<br>
-                    <input type="text" name="name"><br>
+                    <input type="text" name="name" id="username"><br>
                     Password:<br>
-                    <input type="password" name="password"><br>
+                    <input type="password" name="password" id="password"><br>
                     <input type="submit" value="Login">
-                    <a href="createaccount.html">Register</a>
+                    <div id="errorMessage"></div>
+                    Don't have an account. <a href="createaccount.html">Register</a>
                 </form>
-            </strong>
-        </font>
+        </strong>
     </div> <!-- /container -->
+</center>
+</div>
     <!-- Bootstrap core JavaScript
     ================================================== -->
     <!-- Placed at the end of the document so the pages load faster -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
     <script>window.jQuery || document.write('<script src="../js/vendor/jquery.min.js"><\/script>')</script>
     <script src="../js/vendor/bootstrap.min.js"></script>
-</center>
+    <script type="text/javascript">
+        $(function () {
+            $("#mainForm").submit(function (event) {
+
+                event.preventDefault();
+
+               var posting = $.post("loginAjax", {name: $("#username").val(), password: $("#password").val()}) ;
+
+                posting.done(function (message){
+                    if (message === ""){
+                        window.location.href ="../";
+
+                    }else{
+                        $("#errorMessage").empty().append(message);
+                    }
+                })
+            });
+
+
+        });
+    </script>
+
 </body>
+
 </html>
