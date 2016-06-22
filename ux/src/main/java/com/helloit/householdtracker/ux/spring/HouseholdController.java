@@ -196,7 +196,7 @@ public class HouseholdController {
     }
 
 
-    @RequestMapping(path = "logout", method = RequestMethod.POST)
+    @RequestMapping(path = "account/logout", method = RequestMethod.POST)
     public @ResponseBody void logout (final HttpSession session){
         if (LOGGER.isDebugEnabled()){
             final Object username = session.getAttribute(CURRENT_PRINCIPAL_TAG);
