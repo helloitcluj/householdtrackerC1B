@@ -133,6 +133,46 @@ public class HouseholdController {
     }
 
 
+    @RequestMapping(path = "account/registerAjax", method = RequestMethod.POST)
+    public @ResponseBody String  registerAjax(final ModelMap model, final String username, final String password, final String confirmPassword,final HttpSession session) {
+
+        if (LOGGER.isDebugEnabled()) {
+            LOGGER.debug("Creating new account: " + username);
+        }
+
+        final IAccountService.CreationOutcomes outcome = accountService.register(username, password, confirmPassword);
+        accountService.register(username, password, confirmPassword);
+
+        final String results;
+
+        switch (outcome) {
+            case USER_SAVED: {
+                session.setAttribute(CURRENT_PRINCIPAL_TAG, username);
+               // results ="User successfully created.";
+                results= null;
+
+                //model.addAttribute(MESSAGE_PARAMETER_TAG, "User successfully created.");
+                break;
+            }
+            case CONFIRMATION_PASSWORD_DO_NOT_MATCH: {
+                results ="Password and Confirm password did not match!";
+
+                //model.addAttribute(MESSAGE_PARAMETER_TAG, );
+                break;
+            }
+            case USERNAME_ALREADY_EXISTS: {
+                results= "Account '" + username + "' already exists!";
+               // model.addAttribute(MESSAGE_PARAMETER_TAG, );
+                break;
+            }
+            default: {
+                throw new UnsupportedOperationException("Not supported case!");
+            }
+        }
+
+        return results;
+    }
+
 
 
 
@@ -153,6 +193,16 @@ public class HouseholdController {
 
         return result;
 
+    }
+
+
+    @RequestMapping(path = "logout", method = RequestMethod.POST)
+    public @ResponseBody void logout (final HttpSession session){
+        if (LOGGER.isDebugEnabled()){
+            final Object username = session.getAttribute(CURRENT_PRINCIPAL_TAG);
+            LOGGER.debug("Logging out user" + username);
+        }
+        session.invalidate();
     }
 
 }
