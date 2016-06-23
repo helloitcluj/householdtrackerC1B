@@ -181,17 +181,7 @@ public class HouseholdController {
     @RequestMapping(path = "/", method = RequestMethod.GET)
     public String home(final HttpSession session) {
 
-        final String result;
-
-        final Object currentUser = session.getAttribute(CURRENT_PRINCIPAL_TAG);
-
-        if (currentUser != null) {
-            result = HOME_VIEW_TAG;
-        } else {
-            result = "redirect:/account/loginpage.html";
-        }
-
-        return result;
+        return HOME_VIEW_TAG;
 
     }
 
