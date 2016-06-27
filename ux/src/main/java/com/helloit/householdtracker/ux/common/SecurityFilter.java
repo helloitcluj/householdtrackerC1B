@@ -24,10 +24,14 @@ public class SecurityFilter implements Filter {
         final HttpServletResponse httpServletResponse = (HttpServletResponse) resp;
 
         final String requestURI = httpServletRequest.getRequestURI();
-        if (requestURI.startsWith(httpServletRequest.getContextPath() + "/account/")) {
+        final String contextPath = httpServletRequest.getContextPath();
+
+        if (requestURI.startsWith(contextPath + "/account/") ||
+                requestURI.startsWith(contextPath + "/css/") ||
+                requestURI.startsWith(contextPath + "/images") ||
+                requestURI.startsWith(contextPath + "/js")) {
             chain.doFilter(req, resp);
         } else {
-            boolean create = false;
             HttpSession session = httpServletRequest.getSession(false);
             if (session != null) {
                 Object currentPrincipal = session.getAttribute(CURRENT_PRINCIPAL_TAG);
