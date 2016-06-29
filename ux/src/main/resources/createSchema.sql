@@ -12,7 +12,7 @@ CREATE CACHED TABLE Expense (
   amount double,
   date TIMESTAMP ,
   description VARCHAR(30),
-  userId INTEGER NOT NULL;
+  userId INTEGER NOT NULL
 );
 
 ALTER TABLE Expense ADD FOREIGN KEY (userId) REFERENCES Users (id);

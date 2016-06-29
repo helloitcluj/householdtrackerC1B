@@ -50,7 +50,7 @@ public class ExpenseRepositoryTest {
     @Test
     public void basicTest(){
         final Calendar now = Calendar.getInstance();
-        final Expense expense = new Expense (32.5, now, "Chocolate", null);
+        final Expense expense = new Expense (32.5, now, "Chocolate", testUser.getId());
 
         Expense saved = expenseRepository.save(expense);
 
@@ -61,7 +61,7 @@ public class ExpenseRepositoryTest {
     @Test
     public void foreignKeyTest(){
         final Calendar now = Calendar.getInstance();
-        final Expense expense = new Expense (32.5, now, "Chocolate", null);
+        final Expense expense = new Expense (32.5, now, "Chocolate", testUser.getId());
 
         try {
 
