@@ -56,4 +56,19 @@ public class ExpenseRepositoryTest {
 
         Assert.assertEquals("Should have an id of 0", new Integer(0), saved.getId());
     }
+
+
+    @Test
+    public void foreignKeyTest(){
+        final Calendar now = Calendar.getInstance();
+        final Expense expense = new Expense (32.5, now, "Chocolate", null);
+
+        try {
+
+            Expense saved = expenseRepository.save(expense);
+            throw new UnsupportedOperationException("Should not happen!");
+        } catch (RuntimeException ex) {
+            //should fail
+        }
+    }
 }
