@@ -1,6 +1,6 @@
 package com.helloit.householdtracker.ux.spring;
 
-import com.helloit.householdtracker.ux.common.IAccountService;
+import com.helloit.householdtracker.ux.common.services.IAccountService;
 import com.helloit.householdtracker.ux.common.entities.User;
 import com.helloit.householdtracker.ux.common.repository.IUserRepository;
 import org.springframework.beans.factory.annotation.Autowired;

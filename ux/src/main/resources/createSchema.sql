@@ -5,3 +5,12 @@ CREATE TABLE Users (
   username VARCHAR(30),
   password VARCHAR(30)
 );
+
+
+CREATE TABLE Expense (
+  id INTEGER IDENTITY PRIMARY KEY,
+  amount double,
+  date TIMESTAMP ,
+  description VARCHAR(30),
+  userId INTEGER NOT NULL;
+);

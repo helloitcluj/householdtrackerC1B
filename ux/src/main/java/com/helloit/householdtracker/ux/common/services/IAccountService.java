@@ -1,4 +1,4 @@
-package com.helloit.householdtracker.ux.common;
+package com.helloit.householdtracker.ux.common.services;
 
 import org.jetbrains.annotations.NotNull;
 
