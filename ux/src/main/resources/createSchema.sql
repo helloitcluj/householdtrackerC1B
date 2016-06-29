@@ -7,10 +7,12 @@ CREATE TABLE Users (
 );
 
 
-CREATE TABLE Expense (
+CREATE CACHED TABLE Expense (
   id INTEGER IDENTITY PRIMARY KEY,
   amount double,
   date TIMESTAMP ,
   description VARCHAR(30),
   userId INTEGER NOT NULL;
 );
+
+ALTER TABLE Expense ADD FOREIGN KEY (userId) REFERENCES Users (id);

@@ -23,6 +23,12 @@ public class Expense {
     private String description;
     private Integer userId;
 
+    public Expense(double amount, Calendar date, String description, Integer userId) {
+        this.amount = amount;
+        this.date = date;
+        this.description = description;
+        this.userId = userId;
+    }
 
 
     public Integer getId() {
