@@ -1,5 +1,6 @@
 package com.helloit.householdtracker.ux.common.services;
 
+import com.helloit.householdtracker.ux.common.entities.User;
 import org.jetbrains.annotations.NotNull;
 
 /**
@@ -22,6 +23,9 @@ public interface IAccountService {
         INVALID_PASSWORD,
         LOGIN_SUCCEED
     }
+
+
+    User find(String name);
 
 }
 
