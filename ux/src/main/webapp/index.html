@@ -13,12 +13,12 @@
 
 <body bgcolor="#1e90ff">
 <center>
-    <div class ="container" style="height: 754px; width: 1574px; background-image: url(../../images/Householdtracker.jpg);">
+    <div class ="container" style="height: 754px; width: 1574px; background-image: url(/images/Householdtracker.jpg);">
         <font color="white">
             <strong>
                 <font size="200">
                     Welcome!
-                   <br>
+                    <br>
                 </font>
                 <button id="logout">Logout</button>
             </strong>
@@ -34,16 +34,16 @@
 <script src="js/vendor/bootstrap.min.js"></script>
 <script type="text/javascript">
     $(function () {
-        $("#logout").click(function (event) {
+        $("#logout").click(function () {
 
             var posting = $.post("account/logout") ;
 
             posting.done(function() {
-                    window.location.href ="account/loginpage.html";
+                window.location.href ="account/loginpage.html";
             });
         });
 
-   });
+    });
 </script>
 
 </body>

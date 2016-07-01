@@ -21,7 +21,6 @@ public class HouseholdController {
 
     public static final String MESSAGE_VIEW_TAG = "messagebox";
     public static final String MESSAGE_PARAMETER_TAG = "message";
-    public static final String HOME_VIEW_TAG = "homepage";
     public static final String CURRENT_PRINCIPAL_TAG = "currentPrincipal";
 
     @Autowired
@@ -172,18 +171,12 @@ public class HouseholdController {
         return results;
     }
 
-
-
-
-
-
     @RequestMapping(path = "/", method = RequestMethod.GET)
-    public String home(final HttpSession session) {
+    public String home() {
 
-        return HOME_VIEW_TAG;
+        return "redirect:/index.html";
 
     }
-
 
     @RequestMapping(path = "account/logout", method = RequestMethod.POST)
     public @ResponseBody void logout (final HttpSession session){
