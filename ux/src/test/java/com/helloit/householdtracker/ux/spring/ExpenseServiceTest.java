@@ -2,6 +2,7 @@ package com.helloit.householdtracker.ux.spring;
 
 import com.helloit.householdtracker.ux.common.entities.Expense;
 import com.helloit.householdtracker.ux.common.repository.IExpenseRepository;
+import org.junit.Assert;
 import org.junit.Test;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -14,13 +15,24 @@ import java.util.List;
  */
 public class ExpenseServiceTest {
 
+    public static final double TEST_AMOUNT = 32.5;
+    public static final String TEST_DESCRIPTION = "Chocolate";
+    public static final Integer TEST_USER_ID = 1;
+
     @Test
     public void basicTest() {
-        final IExpenseRepository repository = createMockExpenseRepository();
+        final MockExpenseRepository repository = createMockExpenseRepository();
         final ExpenseService expenseService = new ExpenseService(repository);
 
         final Calendar now = Calendar.getInstance();
-        expenseService.save(now, 32.5, "Chocolate",1);
+        expenseService.save(now, TEST_AMOUNT, TEST_DESCRIPTION, TEST_USER_ID);
+
+        Expense savedEntity = repository.getSavedEntity();
+
+        Assert.assertEquals("Should be the same", now, savedEntity.getCalendar());
+        Assert.assertEquals("Should be the same", TEST_AMOUNT, savedEntity.getAmount(), 0.0);
+        Assert.assertEquals("Should be the same", TEST_DESCRIPTION, savedEntity.getDescription());
+        Assert.assertEquals("Should be the same", TEST_USER_ID, savedEntity.getUserId());
     }
 
     private MockExpenseRepository createMockExpenseRepository() {
@@ -28,6 +40,8 @@ public class ExpenseServiceTest {
     }
 
     private static class MockExpenseRepository implements IExpenseRepository {
+
+        private Expense savedEntity;
 
         @Override
         public List<Expense> findByUserId(String userId) {
@@ -85,7 +99,9 @@ public class ExpenseServiceTest {
 
         @Override
         public <S extends Expense> S save(S entity) {
-            return null;
+            savedEntity = entity;
+
+            return entity;
         }
 
         @Override
@@ -121,6 +137,10 @@ public class ExpenseServiceTest {
         @Override
         public void deleteAll() {
 
+        }
+
+        public Expense getSavedEntity() {
+            return savedEntity;
         }
     }
 }
