@@ -9,23 +9,31 @@
     <link href="css/vendor/bootstrap.min.css" rel="stylesheet">
     <link href="css/common.css" rel="stylesheet">
     <!-- Custom styles for this template -->
-    <link href="css/loginpage.css" rel="stylesheet">
+    <link href="css/index.css" rel="stylesheet">
 </head>
 
-<body bgcolor="#1e90ff">
-<center>
-    <div class ="container" style="height: 754px; width: 1574px; background-image: url(/images/Householdtracker.jpg);">
-        <font color="white">
-            <strong>
-                <font size="200">
-                    Welcome!
-                    <br>
-                </font>
-                <button id="logout">Logout</button>
-            </strong>
-        </font>
-    </div>
-</center>
+<body>
+<div class ="container">
+    <nav class="navbar navbar-light bg-faded">
+        <button class="navbar-toggler hidden-sm-up" type="button" data-toggle="collapse"
+                data-target="#exCollapsingNavbar2">
+            &#9776;
+        </button>
+        <div class="collapse navbar-toggleable-xs" id="exCollapsingNavbar2">
+            <a class="navbar-brand" href="#">Welcome!</a>
+            <ul class="nav navbar-nav">
+                <li class="nav-item">
+                    <a class="nav-link" href=".">Home <span class="sr-only">(current)</span></a>
+                </li>
+                <li class="nav-item pull-xs-right">
+                    <a id="logout" class="nav-link">Logout</a>
+                </li>
+            </ul>
+
+        </div>
+    </nav>
+
+</div>
 
 <!-- Bootstrap core JavaScript
   ================================================== -->

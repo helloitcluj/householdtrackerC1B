@@ -40,9 +40,11 @@
     <script src="../js/vendor/bootstrap.min.js"></script>
     <script src="../js/common.js"></script>
     <script type="text/javascript">
+
         helloit.showError = function (message) {
             $("#errorMessage").empty().append(message);
-        }
+        };
+
 
         $(function () {
             $("#mainForm").submit(function (event) {
@@ -62,7 +64,7 @@
                 });
 
                 posting.fail(function() {
-                    helloit.showError("No connection to the server!");
+                    showError("No connection to the server!");
                 });
 
             });
