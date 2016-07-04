@@ -15,8 +15,8 @@
 <body>
 <div id="mainDiv" class="container">
 <div>
-        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addExpenseModal">Add</button>
-        <div class="modal fade" id="addExpenseModal" tabindex="-1" role="dialog" aria-labelledby="addExpenseModalLabel"
+        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addExpenceModal">Add</button>
+        <div class="modal fade" id="addExpenceModal" tabindex="-1" role="dialog" aria-labelledby="addExpenceModalLabel"
              aria-hidden="true">
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
@@ -24,7 +24,7 @@
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
-                        <h4 class="modal-title" id="addExpenseModalLabel">New expense</h4>
+                        <h4 class="modal-title" id="addExpenceModalLabel">New expense</h4>
                     </div>
                     <div class="modal-body">
                         <form>
@@ -44,7 +44,7 @@
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-                        <button type="button" class="btn btn-primary" id="save">Save</button>
+                        <button type="button" class="btn btn-primary" id="save" data-dismiss="modal">Save</button>
                     </div>
                 </div>
             </div>
@@ -64,25 +64,26 @@
 <script src="js/common.js"></script>
 
 <script type="text/javascript">
+     helloit.x = true;
 
     $("#mainDiv").prepend(helloit.createNavbar());
+     
+     hellloit.hideAddExpantion = function (){
 
-    helloit.hideAddExpenseModal = function () {
-        $("#addExpenseModal").modal("hide");
-    };
+     }
 
     $( function () {
         $("#save").click( function (event) {
-            var expense = {
+            var expence = {
                 date: $("#date").val(),
-                amount: $("#amount").val(),
-                description: $("#description").val()
+                maount: $("#amount").val(),
+                description: $("#description").val(),
             };
-            var posting = $.post("expense/create", expense);
-
-            posting.done(function () {
-                helloit.hideAddExpenseModal();
-            });
+            var posting = $.post("expence/create", expence)
+                    
+                    posting.done(function () {
+                       helloit.hideAddExpenceModal 
+                    });
         });
 
     });

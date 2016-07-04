@@ -6,10 +6,7 @@ import com.helloit.householdtracker.ux.common.services.IExpenseService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.Calendar;
-import java.util.Date;
 
 /**
  */
@@ -19,7 +16,6 @@ public class ExpenseService implements IExpenseService {
 
 
     private final IExpenseRepository expenseRepository;
-    private SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm");
 
     @Autowired
     public ExpenseService(final IExpenseRepository expenseRepository) {
@@ -31,21 +27,11 @@ public class ExpenseService implements IExpenseService {
     public Expense save(final String date, final double amount, final String description, final Integer userId) {
 
 
-        final Expense expense = new Expense(amount, convert(date), description, userId);
 
         return expenseRepository.save(expense);
     }
 
-    private Calendar convert(final String dateAsString) {
-        Calendar result = null;
-
-        try {
-            Date date = formatter.parse(dateAsString);
-            result = Calendar.getInstance();
-            result.setTime(date);
-        } catch (final ParseException ignored) {
-            //ignored
-        }
-
-        return result;    }
+    private Calendar convert(String date) {
+        return null;
+    }
 }
