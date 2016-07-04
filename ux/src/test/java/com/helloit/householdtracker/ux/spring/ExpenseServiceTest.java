@@ -24,12 +24,12 @@ public class ExpenseServiceTest {
         final MockExpenseRepository repository = createMockExpenseRepository();
         final ExpenseService expenseService = new ExpenseService(repository);
 
-        final Calendar now = Calendar.getInstance();
-        expenseService.save(now, TEST_AMOUNT, TEST_DESCRIPTION, TEST_USER_ID);
+        final String date = "2016-07-04T15:00";
+        expenseService.save(date, TEST_AMOUNT, TEST_DESCRIPTION, TEST_USER_ID);
 
         Expense savedEntity = repository.getSavedEntity();
 
-        Assert.assertEquals("Should be the same", now, savedEntity.getCalendar());
+        Assert.assertNotNull("Should be the same", savedEntity.getCalendar());
         Assert.assertEquals("Should be the same", TEST_AMOUNT, savedEntity.getAmount(), 0.0);
         Assert.assertEquals("Should be the same", TEST_DESCRIPTION, savedEntity.getDescription());
         Assert.assertEquals("Should be the same", TEST_USER_ID, savedEntity.getUserId());

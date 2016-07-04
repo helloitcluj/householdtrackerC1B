@@ -33,7 +33,7 @@ public class ExpenseController {
 
 
     @RequestMapping(path = "create", method = RequestMethod.POST)
-    public @ResponseBody void create(final HttpSession session, final Calendar date, final double amount, final String description){
+    public @ResponseBody void create(final HttpSession session, final String date, final double amount, final String description){
 
         final String name = (String ) session.getAttribute(SecurityFilter.CURRENT_PRINCIPAL_TAG);
         final User user = accountService.find(name);
