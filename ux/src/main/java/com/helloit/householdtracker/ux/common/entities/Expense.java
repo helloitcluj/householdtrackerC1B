@@ -17,12 +17,12 @@ public class Expense {
 
     private double amount;
 
+    private Integer userId;
+
     @Temporal (TemporalType.TIMESTAMP)
     private Calendar date;
 
     private String description;
-    private Integer userId;
-
 
     public Expense () {
     }
