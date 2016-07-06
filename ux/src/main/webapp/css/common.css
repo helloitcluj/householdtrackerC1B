@@ -2,3 +2,7 @@ body {
     background-image: url("../images/Householdtracker.jpg");
     background-color: #1e90ff;
 }
+
+.main-navbar {
+    margin-bottom: 10px;
+}
