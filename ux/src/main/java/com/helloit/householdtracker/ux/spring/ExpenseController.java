@@ -2,6 +2,7 @@ package com.helloit.householdtracker.ux.spring;
 
 
 import com.helloit.householdtracker.ux.common.SecurityFilter;
+import com.helloit.householdtracker.ux.common.entities.Expense;
 import com.helloit.householdtracker.ux.common.entities.User;
 import com.helloit.householdtracker.ux.common.repository.IExpenseRepository;
 import com.helloit.householdtracker.ux.common.services.IAccountService;
@@ -17,6 +18,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import javax.servlet.http.HttpSession;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 
 
 @Controller
@@ -33,11 +35,26 @@ public class ExpenseController {
 
 
     @RequestMapping(path = "create", method = RequestMethod.POST)
-    public @ResponseBody void create(final HttpSession session, final String date, final double amount, final String description){
+    public
+    @ResponseBody
+    void create(final HttpSession session, final String date, final double amount, final String description) {
 
-        final String name = (String ) session.getAttribute(SecurityFilter.CURRENT_PRINCIPAL_TAG);
+        final String name = (String) session.getAttribute(SecurityFilter.CURRENT_PRINCIPAL_TAG);
         final User user = accountService.find(name);
 
         expenseService.save(date, amount, description, user.getId());
     }
+
+
+    @RequestMapping(path = "findAll", method = RequestMethod.POST)
+    public
+    @ResponseBody
+    List <Expense> findAll(final HttpSession session) {
+
+        final String name = (String) session.getAttribute(SecurityFilter.CURRENT_PRINCIPAL_TAG);
+        final User user = accountService.find(name);
+
+        return expenseService.findByUserId(user.getId());
+    }
+
 }

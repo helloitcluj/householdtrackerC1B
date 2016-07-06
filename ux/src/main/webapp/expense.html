@@ -97,16 +97,19 @@
         $("#addExpenseModal").modal("hide");
     };
 
+    helloit.loadExpenses = function () {
+        var posting = $.post("expense/findAll");
+
+        posting.done( function (result) {
+            $(result).each( function () {
+                helloit.addExpenseRow(this);
+            });
+        });
+    };
+
+
     $( function () {
-
-        var expense = {
-            date: "1/1/1990",
-            amount: 353.45,
-            description: "mock"
-        };
-
-        helloit.addExpenseRow(expense);
-
+        helloit.loadExpenses();
         $("#save").click( function (event) {
             var expense = {
                 date: $("#date").val(),
