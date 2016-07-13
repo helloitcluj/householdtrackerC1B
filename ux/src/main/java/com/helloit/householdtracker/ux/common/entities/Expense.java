@@ -17,11 +17,15 @@ public class Expense {
 
     private double amount;
 
+    private Integer userId;
+
     @Temporal (TemporalType.TIMESTAMP)
     private Calendar date;
 
     private String description;
-    private Integer userId;
+
+    public Expense () {
+    }
 
     public Expense(double amount, Calendar date, String description, Integer userId) {
         this.amount = amount;
